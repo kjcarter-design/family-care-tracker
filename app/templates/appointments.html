@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block content %}
+<h1>Family Care Tracker</h1>
+
+<h2>Add Appointment</h2>
+<form action="/appointments" method="POST">
+	<label>Title</label>
+	<input type="text" name="title" required />
+	<label>Date</label>
+	<input type="date" name="date" required />
+	<label>Notes</label>
+	<textarea name="notes" rows="3"></textarea>
+	<button type="submit">Add Appointment</button>
+</form>
+
+<h2>Appointments</h2>
+<table>
+	<tr>
+		<th>Title</th>
+		<th>Date</th>
+		<th>Notes</th>
+		<th>Action</th>
+	</tr>
+	{% for appointment in appointments %}
+	<tr>
+		<td>{{ appointment.title }}</td>
+		<td>{{ appointment.date }}</td>
+		<td>{{ appointment.notes }}</td>
+		<td>
+			<form action="/appointments/{{ appointment.id }}/delete" method="POST">
+				<button class="delete-btn" type="submit">Delete</button>
+				<a href="/appointments/{{ appointment.id }}/edit">
+					<button type="button">Edit</button>
+				</a>
+			</form>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}
